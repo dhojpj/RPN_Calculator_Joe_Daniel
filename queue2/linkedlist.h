@@ -178,6 +178,8 @@ void linkedList<T>::copy(const linkedList &other)
         insert(ptr->getData());
 }
 
+
+// i added this comment
 template<typename T>
 void linkedList<T>::nukem()
 {
