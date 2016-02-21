@@ -12,13 +12,12 @@ int main()
 
     fraction f(1,2);
     fraction c(1,2);
-    c += 2;
-    cout<< "sum :"<<c <<endl;
+    fraction a, b(22,2), d(1,4),z;
+    cout<<"before"<<endl;
+    z = b - 2;
 
-//    cout << f.gcd(f.numerator(), f.denominator()) << endl;
-//    f.reduce();
-    cout << f << endl;
-
+    cout<<"z: "<<z<<endl;
+    cout<<"z: "<<(f - c)<<endl;
     return 0;
 }
 

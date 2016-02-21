@@ -28,7 +28,24 @@ fraction::fraction(int x)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++
 fraction::fraction(double x)
 {
+    denom = 1;
+    double tempX = x;
 
+    while(tempX != (int) tempX)
+    {
+        tempX=tempX*10;
+        denom *=10;
+
+        std::cout<<"tempx: "<<tempX<<" tempX: int: "<<(int) tempX<<std::endl;
+        //std::cout<<"texP : "<<tempX<<std::endl;
+
+        // infinity loop here
+        if(tempX > 1000000)
+            break;
+
+    }
+    num = tempX;
+    reduce();
 }
 
 
@@ -44,6 +61,7 @@ fraction& fraction::operator=(const fraction &other)
         num = other.num;
         denom = other.denom;
     }
+    return *this;
 }
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -55,7 +73,9 @@ fraction& fraction::operator=(int other)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++
 fraction& fraction::operator=(double other)
 {
-
+    fraction temp(other);
+    num = temp.numerator();
+    denom = temp.denominator();
 }
 
 void fraction::setValue(int n, int d)
@@ -119,12 +139,37 @@ fraction& fraction::operator/=(int other)
     fraction c(other,1);
     return *this/=c;
 }
+
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++
 fraction& fraction::operator^=(int other){}
-fraction& fraction::operator+=(double other){}
-fraction& fraction::operator-=(double other){}
-fraction& fraction::operator*=(double other){}
-fraction& fraction::operator/=(double other){}
+
+
+fraction& fraction::operator+=(double other)
+{
+    fraction doubleOther(other);
+    return *this+=doubleOther;
+
+}
+fraction& fraction::operator-=(double other)
+{
+    fraction doubleOther(other);
+    return *this-=doubleOther;
+}
+
+fraction& fraction::operator*=(double other)
+{
+    fraction doubleOther(other);
+    return *this*=doubleOther;
+}
+
+fraction& fraction::operator/=(double other)
+{
+    fraction doubleOther(other);
+    return *this/=doubleOther;
+}
+//++++++++++++++++++++++++++++++++++++++++++++++++++
 fraction& fraction::operator^=(double other){}
+
 
 void fraction::reduce()
 {
@@ -146,6 +191,7 @@ void fraction::setNum(int n, int d)
     denom < 0  ? sign = -1:sign = 1;
     denom = sign*d;
     num = sign*n;
+
 }
 
 int& fraction::numerator()
@@ -172,26 +218,60 @@ int fraction::gcd(int p, int q)
 }
 
 
-
-
 // need to remove the first const
 fraction& operator+(fraction &x, const fraction &y)
 {
-    return (x+=y);
+    int n = x.num*y.denom+x.denom*y.num;
+    int d = x.denom*y.denom;
+    fraction a (n,d);
+    return a;
+
 }
 
-fraction& operator-(const fraction &x, const fraction &y){}
+fraction& operator-(const fraction &x, const fraction &y)
+{
+    int n = x.num*y.denom-x.denom*y.num;
+    int d = x.denom*y.denom;
+    fraction *a = new fraction(n,d);
+    return *a;
+}
 
-fraction& operator*(const fraction &x, const fraction &y){}
+fraction& operator*(const fraction &x, const fraction &y)
+{
+    int n = x.num*y.num;
+    int d = x.denom*y.denom;
+    fraction a (n,d);
+    return a;
+}
 
-fraction& operator/(const fraction &x, const fraction &y){}
+fraction& operator/(const fraction &x, const fraction &y)
+{
+    int n = x.num*y.denom;
+    int d = x.denom*y.num;
+    fraction a (n,d);
+    return a;
+}
 
+//+++++++++++++++++++++++++++++++++++++
 fraction& operator^(const fraction &x, const fraction &y){}
 
 
-fraction& operator+(const fraction &x, int y){}
+fraction& operator+(const fraction &x, int y)
+{
 
-fraction& operator-(const fraction &x, int y){}
+
+}
+
+fraction& operator-(const fraction &x, int y)
+{
+    fraction c(y,1);
+//    this->num = x.num*c.denom-x.denom*c.num;
+//    this->denom = x.denom*c.denom;
+//    cout<<c<<endl;
+//    cout<<x<<endl;
+//    cout<<"dd: "<<(x - c);
+    return (x - c);
+}
 
 fraction& operator*(const fraction &x, int y){}
 
