@@ -1,9 +1,6 @@
 #ifndef BASENODE_H
 #define BASENODE_H
 
-// base node with void pointers to their data
-// will cast pointers to their type when returning
-
 #include <iostream>
 #include <cstdlib>
 
@@ -13,20 +10,19 @@ using std::endl;
 using std::ostream;
 using std::istream;
 
+
 template<typename T>
 class baseNode
 {
 public:
-    baseNode(T uData = T());
+    baseNode(T uData = T()); // constructor
+    baseNode(const baseNode& other); // copy constructor
+    baseNode& operator=(const baseNode& other); // assignment operator
 
     T getData( ) const;
     void setData(T value);
     baseNode*& nextNode(); // lhs and rhs
-
     void setNext(baseNode* nNode);
-
-    baseNode(const baseNode& other);
-    baseNode& operator = (const baseNode& other);
 
     // const at the end prevents changes to *this
     bool operator<(const baseNode &x) const;
@@ -39,6 +35,8 @@ public:
     template<typename R>
     friend ostream& operator << (ostream& out, const baseNode<R>& whom);
 
+    template<typename R>
+    friend istream& operator >> (istream& in, baseNode<R>& whom);
 
 protected:
     T data;
@@ -141,13 +139,27 @@ bool baseNode<T>::operator!=(const baseNode<T> &x) const
     return data != x.data;
 }
 
-
+//need file write data ++++++++++++++++++++++++++++++++++++++++++++++++++
 template<typename R>
 ostream& operator << (ostream& out, const baseNode<R>& whom)
 {
     if (out == cout)
-        out << whom.getData();
+    {
+        out << "Data: " << whom.getData();
+    }
     return out;
+}
+
+//need file read data ++++++++++++++++++++++++++++++++++++++++++++++++++
+template<typename R>
+istream& operator >> (istream& in, baseNode<R>& whom)
+{
+    if (in == cin)
+    {
+        cout << "Enter data: ";
+        in >> whom.data;
+    }
+    return in;
 }
 
 

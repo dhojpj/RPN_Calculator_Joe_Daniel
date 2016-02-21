@@ -8,7 +8,5 @@ SOURCES += \
 
 HEADERS += \
     baseNode.h \
-    linkedlist.h \
-    queue2.h \
-    queue.h
+    linkedlist.h
 
