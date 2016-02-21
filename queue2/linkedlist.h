@@ -10,7 +10,7 @@ using std::endl;
 using std::ostream;
 using std::istream;
 
-enum LINKEDLISTERRORS {EMPTYLINKEDLIST_ERROR,FULLLINKEDLIST_ERROR};
+enum LINKEDLISTERRORS {EMPTYLINKEDLIST_ERROR, FULLLINKEDLIST_ERROR};
 
 template<typename T>
 class linkedList
@@ -26,23 +26,16 @@ class linkedList
         unsigned int size();
         unsigned int max_size();
 
-//        void insertTail(T data);
-        void insertanchor(T data);
+        void insert(T data);
         T remove();
         void erase(void *whom);
         void resize(unsigned int s);
-//        T font() const;
-//        T& back() const;
-
-
 
         template<typename R>
-        friend
-        ostream& operator<<(ostream& out, const linkedList<R> &s);
+        friend ostream& operator<<(ostream& out, const linkedList<R> &s);
 
         template<typename R>
-        friend
-        istream& operator>>(istream& in, linkedList<R> &s);
+        friend istream& operator>>(istream& in, linkedList<R> &s);
 
     protected:
         baseNode<T> *anchor;
@@ -109,49 +102,20 @@ unsigned int linkedList<T>::max_size()
     return maxQty;
 }
 
-
-// tail will be added to the queue
-//template<typename T>
-//void linkedList<T>::insertTail(T data)
-//{
-//    if(qty == maxQty)
-//            throw FULLLINKEDLIST_ERROR;
-
-//        baseNode<T> *newNode = new baseNode<T> (data);
-
-
-//        //when it's empty
-//        if(empty())
-//        {
-//            anchor = tail = newNode;
-
-//        }
-//        // when it's not empty add data to the tail
-//        else
-//        {
-//            //link the tail's next node to the newNode
-//            // set the newNode to be the last node in the list
-//            tail->nextNode() = newNode;
-//            tail = newNode;
-//        }
-//        ++qty;
-//}
-
 template<typename T>
-void linkedList<T>::insertanchor(T data)
+void linkedList<T>::insert(T data)
 {
 
     if(qty == maxQty)
             throw FULLLINKEDLIST_ERROR;
 
-    baseNode<T> *newNode = new baseNode<T> (data);
-
+    // constructing with the data in parameter
+    baseNode<T> *newNode = new baseNode<T>(data);
 
     //when it's empty
     if(!anchor)
     {
-        anchor = newNode;
-
+        anchor->nextNode() = newNode;
     }
     else
     {
@@ -160,7 +124,7 @@ void linkedList<T>::insertanchor(T data)
         newNode->nextNode() = anchor;
         anchor = newNode;
     }
-    qty++;
+    ++qty;
 }
 
 template<typename T>

@@ -2,14 +2,12 @@
 #define BASENODE_H
 
 #include <iostream>
-#include <cstdlib>
 
 using std::cout;
 using std::cin;
 using std::endl;
 using std::ostream;
 using std::istream;
-
 
 template<typename T>
 class baseNode
@@ -112,7 +110,7 @@ bool baseNode<T>::operator<(const baseNode<T> &x) const
 template<typename T>
 bool baseNode<T>::operator<=(const baseNode<T> &x) const
 {
-    return data < x.data;
+    return data <= x.data;
 }
 
 template<typename T>
