@@ -15,35 +15,40 @@ enum LINKEDLISTERRORS {EMPTYLINKEDLIST_ERROR, FULLLINKEDLIST_ERROR};
 template<typename T>
 class linkedList
 {
-    public:
-        linkedList(int maxSize = 10);
-        virtual ~linkedList();
-        linkedList(const linkedList &other);
-        linkedList operator = (const linkedList &other);
+public:
+    linkedList(int maxSize = 10);
+    virtual ~linkedList();
+    linkedList(const linkedList &other);
+    linkedList operator = (const linkedList &other);
 
-        bool empty();
-        bool full();
-        unsigned int size();
-        unsigned int max_size();
+    bool empty();
+    bool full();
 
-        void insert(T data);
-        T remove();
-        void erase(void *whom);
-        void resize(unsigned int s);
+    unsigned int size();
+    unsigned int max_size();
 
-        template<typename R>
-        friend ostream& operator<<(ostream& out, const linkedList<R> &s);
+    T remove();
+    void resize(unsigned int s);
 
-        template<typename R>
-        friend istream& operator>>(istream& in, linkedList<R> &s);
+    template<typename R>
+    friend ostream& operator<<(ostream& out, const linkedList<R> &s);
 
-    protected:
-        baseNode<T> *anchor;
-        unsigned int qty, maxQty;
+    template<typename R>
+    friend istream& operator>>(istream& in, linkedList<R> &s);
 
-    private:
-        void copy(const linkedList &other);
-        void nukem();
+
+
+protected:
+    baseNode<T> *anchor;
+    unsigned int qty, maxQty;
+
+    void insert(T data);
+    void erase(void *whom);
+
+
+private:
+    void copy(const linkedList &other);
+    void nukem();
 };
 
 template<typename T>
@@ -81,7 +86,7 @@ linkedList<T> linkedList<T>::operator =(const linkedList<T> &other)
 template<typename T>
 bool linkedList<T>::empty()
 {
-    return !anchor;
+    return !qty;
 }
 
 template<typename T>
@@ -104,27 +109,47 @@ unsigned int linkedList<T>::max_size()
 
 template<typename T>
 void linkedList<T>::insert(T data)
-{
-
+{    
     if(qty == maxQty)
-            throw FULLLINKEDLIST_ERROR;
+        throw FULLLINKEDLIST_ERROR;
 
     // constructing with the data in parameter
     baseNode<T> *newNode = new baseNode<T>(data);
+    ++qty;
 
     //when it's empty
     if(!anchor)
     {
-        anchor->nextNode() = newNode;
+        anchor = newNode; // and newNode's next is already NULL
     }
     else
     {
-        //point newNode next to the anchor
-        //point anchor to the newNode;
-        newNode->nextNode() = anchor;
-        anchor = newNode;
+        baseNode<T> *i = anchor;
+        for(;   // while there's a nextnode an the next is less than the data
+            i->nextNode() && i->nextNode()->getData() < data;
+            i = i->nextNode());
+
+
+        // if the data entered is less than the anchor
+        if ((anchor == i) && (i->getData() > data))
+        {
+            newNode->nextNode() = anchor;
+            anchor = newNode;
+            return;
+        }
+        else if (!i) // or if it gets to the end without finding anything
+        {
+            i->nextNode() = newNode;
+            return;
+        }
+
+        // no need for else bracket
+        // but it's found something where data is bigger than previous node
+        // so the data must be
+        newNode->nextNode() = i->nextNode();
+        i->nextNode() = newNode;
     }
-    ++qty;
+
 }
 
 template<typename T>
@@ -156,19 +181,12 @@ void linkedList<T>::resize(unsigned int s)
     maxQty = s;
 }
 
-template<typename T>
-T linkedList<T>::font() const
-{
-    if(!anchor)
-        throw EMPTYLINKEDLIST_ERROR;
-    return anchor->getData();
-}
 
 template<typename R>
 ostream& operator<<(ostream& out, const linkedList<R> &s)
 {
     baseNode<R> *ptr = s.anchor;
-   // baseNode<R> *ptrt = s.tail;
+    // baseNode<R> *ptrt = s.tail;
     for(; ptr; ptr = ptr->nextNode())
         out<<"Data: "<<ptr->getData()<<endl;
     return out;
@@ -188,20 +206,20 @@ template<typename T>
 void linkedList<T>::copy(const linkedList &other)
 {    cout << "copy here0\n";
 
-    //this->qty = other.qty; // don't need this cuz insert will add the size
-    this->maxQty = other.maxQty;
-    int i = 0;
+     //this->qty = other.qty; // don't need this cuz insert will add the size
+     this->maxQty = other.maxQty;
+     int i = 0;
 
-    // loop the other list and get each data then insert it into the call list
-    for(baseNode<T> *ptr = other.anchor; ptr; ptr = ptr->nextNode())
-    {
-        std::cout<<"copydata: "<<ptr->getData()<<" index: "<<i<<"\n";
-        this->insertanchor(ptr->getData());
-        ++i;
-    }
+      // loop the other list and get each data then insert it into the call list
+      for(baseNode<T> *ptr = other.anchor; ptr; ptr = ptr->nextNode())
+      {
+          std::cout<<"copydata: "<<ptr->getData()<<" index: "<<i<<"\n";
+          this->insertanchor(ptr->getData());
+          ++i;
+      }
 
-    this->qty = other.qty;
-    std::cout<<"size in copy after copying: "<<qty<<std::endl;
+       this->qty = other.qty;
+       std::cout<<"size in copy after copying: "<<qty<<std::endl;
 
 }
 
