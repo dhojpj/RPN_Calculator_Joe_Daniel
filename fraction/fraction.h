@@ -8,11 +8,19 @@
 
 enum FRACTION_ERRORS{ZERO_DENOM};
 
-using namespace std;
+
+//using namespace std;
+using std::cout;
+using std::cin;
+using std::ostream;
+using std::istream;
+using std::endl;
+
+
 class fraction
 {
 public:
-    fraction(int n = 0, int d = 1);
+    fraction(long n = 0, int d = 1);
     ~fraction();
     fraction(int x);
     fraction(double x);
@@ -20,6 +28,8 @@ public:
     fraction& operator=(const fraction &other);
     fraction& operator=(int other);
     fraction& operator=(double other);
+    int get_num();
+    int get_denom();
     void setValue(int n = 0, int d = 1);
 
     fraction& operator+=(const fraction &other);
@@ -41,7 +51,7 @@ public:
 
     // need to remove the first const
     friend
-    fraction& operator+(fraction &x, const fraction &y);
+    fraction& operator+(const fraction &x, const fraction &y);
     friend
     fraction& operator-(const fraction &x, const fraction &y);
     friend

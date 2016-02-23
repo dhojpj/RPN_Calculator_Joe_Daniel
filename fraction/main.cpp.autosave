@@ -9,6 +9,8 @@ void addition();
 
 int main()
 {
+    
+    /// comment in the test u want u run
     fraction half(11,2);
     //test_constructor();
 
