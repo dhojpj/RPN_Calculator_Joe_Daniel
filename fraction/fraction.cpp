@@ -146,6 +146,7 @@ void fraction::setNum(int n, int d)
     denom < 0  ? sign = -1:sign = 1;
     denom = sign*d;
     num = sign*n;
+    reduce();
 }
 
 int& fraction::numerator()

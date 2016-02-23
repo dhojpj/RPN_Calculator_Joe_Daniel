@@ -1,24 +1,14 @@
 #include <iostream>
 #include "fraction.h"
-#include "mixed.h"
-
 using namespace std;
 
 int main()
 {
-//    mixed a,b,c;
-//    c = a + b;
+    cout << "Hello World!" << endl;
 
-
-    fraction f(1,2);
-    fraction c(1,2);
-    c += 2;
-    cout<< "sum :"<<c <<endl;
-
-//    cout << f.gcd(f.numerator(), f.denominator()) << endl;
-//    f.reduce();
-    cout << f << endl;
-
+    fraction a(2.33);
+    cout<<a<<endl;
     return 0;
+
 }
 
