@@ -54,6 +54,7 @@ private:
     void nukem();
 };
 
+// CHECKED, need remove cout
 template<typename T>
 linkedList<T>::linkedList(int maxSize)
 {
@@ -63,6 +64,7 @@ linkedList<T>::linkedList(int maxSize)
     anchor = NULL;
 }
 
+//========================= this doesn't seem to be firing
 template<typename T>
 linkedList<T>::~linkedList()
 {
@@ -222,36 +224,23 @@ istream& operator>>(istream& in, linkedList<R> &s)
     return in;
 }
 
-//==================NEED TO CHECK THIS================
+
+// CHECKED
 template<typename T>
 void linkedList<T>::copy(const linkedList &other)
-{
+{    
+    this->maxQty = other.maxQty;
 
-    if (!this)
+    for(baseNode<T> *ptr = other.anchor; ptr; ptr = ptr->nextNode())
     {
-        cout << "wth\n";
+        this->insert(ptr->getData());
     }
 
-    cout << "copy here0\n";
-
-     //this->qty = other.qty; // don't need this cuz insert will add the size
-     this->maxQty = other.maxQty;
-     int i = 0;
-
-      // loop the other list and get each data then insert it into the call list
-      for(baseNode<T> *ptr = other.anchor; ptr; ptr = ptr->nextNode())
-      {
-          std::cout<<"copydata: "<<ptr->getData()<<" index: "<<i<<"\n";
-          this->insert(ptr->getData());
-          ++i;
-      }
-
-       this->qty = other.qty;
-       std::cout<<"size in copy after copying: "<<qty<<std::endl;
-
+//    technically we don't even need this line because insert increments everything
+//    this->qty = other.qty;
 }
 
-//==================NEED TO CHECK THIS================
+//CHECKED, just need to remove cout
 template<typename T>
 void linkedList<T>::nukem()
 {

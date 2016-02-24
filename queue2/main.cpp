@@ -27,14 +27,23 @@ int main()
 
 
 
+//    linkedList<int>* m = new linkedList<int>;
+
+//    *m = *l;
+
     linkedList<int>* m = new linkedList<int>;
 
     *m = *l;
 
-    cout << endl << "l:\n" << *l << endl;
+    cout << "l = " << l << endl << *l << endl;
     cout << l->size() << endl << endl;
-    cout << "m:\n" << *m << endl;
+    cout << "m = " << m << endl << *m << endl;
     cout << m->size() << endl << endl;
+
+
+    l->resize(5);
+    cout << "l = " << l << endl << *l << endl;
+    cout << l->size() << endl << endl;
 
     return 0;
 }
