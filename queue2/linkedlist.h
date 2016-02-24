@@ -37,7 +37,7 @@ public:
     friend istream& operator>>(istream& in, linkedList<R> &s);
 
 
-
+//==========================================================================================
     // should be protected
     void insert(T data);
     void erase(void *whom);
@@ -54,17 +54,16 @@ private:
     void nukem();
 };
 
-// CHECKED, need remove cout
+// CHECKED
 template<typename T>
 linkedList<T>::linkedList(int maxSize)
 {
-    cout << "constructed  " << this << endl;
     qty = 0;
     maxQty = maxSize;
     anchor = NULL;
 }
 
-//========================= this doesn't seem to be firing
+//========================= this doesn't seem to be calling
 template<typename T>
 linkedList<T>::~linkedList()
 {
@@ -72,18 +71,17 @@ linkedList<T>::~linkedList()
     nukem();
 }
 
+// CHECKED, works not for lhs pointer
 template<typename T>
 linkedList<T>::linkedList(const linkedList &other)
 {
-    cout << "copying " << this << endl;
     copy(other);
 }
 
-//==================NEED TO CHECK THIS================
+// CHECKED
 template<typename T>
 linkedList<T> linkedList<T>::operator=(const linkedList<T> &other)
 {
-    cout << "= called\n";
     if(this != &other)
     {
         nukem();
@@ -92,14 +90,14 @@ linkedList<T> linkedList<T>::operator=(const linkedList<T> &other)
     return *this;
 }
 
-//==================NEED TO CHECK THIS================
+// CHECKED
 template<typename T>
 bool linkedList<T>::empty()
 {
     return !qty;
 }
 
-//==================NEED TO CHECK THIS================
+// CHECKED
 template<typename T>
 bool linkedList<T>::full()
 {
@@ -113,18 +111,42 @@ unsigned int linkedList<T>::size()
     return qty;
 }
 
-//==================NEED TO CHECK THIS================
+// CHECKED
 template<typename T>
 unsigned int linkedList<T>::max_size()
 {
     return maxQty;
 }
 
-// CHECKED, JUST NEED TO FIX OUTPUT ONCE EVERYTHING IS DEBUGGED
+// CHECKED
 template<typename T>
 void linkedList<T>::insert(T data)
 {    
+
     if(qty == maxQty)
+            throw FULLLINKEDLIST_ERROR;
+
+        baseNode<T> *newNode = new baseNode<T> (data);
+
+
+        //when it's empty
+        if(!anchor)
+        {
+            anchor = newNode;
+        }
+        // when it's not empty add data to the tail
+        else
+        {
+            //link the tail's next node to the newNode
+            // set the newNode to be the last node in the list
+            newNode->nextNode() = anchor;
+            anchor = newNode;
+        }
+        ++qty;
+
+
+    /*
+     * if(qty == maxQty)
         throw FULLLINKEDLIST_ERROR;
 
     // constructing with the data in parameter
@@ -165,10 +187,10 @@ void linkedList<T>::insert(T data)
         newNode->nextNode() = i->nextNode();
         i->nextNode() = newNode;
     }
-
+*/
 }
 
-//==================NEED TO CHECK THIS================
+// CHECKED
 template<typename T>
 T linkedList<T>::remove()
 {
@@ -191,7 +213,7 @@ T linkedList<T>::remove()
     return d;
 }
 
-//==================NEED TO CHECK THIS================
+// CHECKED
 template<typename T>
 void linkedList<T>::resize(unsigned int s)
 {
@@ -199,6 +221,39 @@ void linkedList<T>::resize(unsigned int s)
     maxQty = s;
 }
 
+
+// CHECKED
+template<typename T>
+void linkedList<T>::copy(const linkedList &other)
+{
+    this->maxQty = other.maxQty;
+
+    for(baseNode<T> *ptr = other.anchor; ptr; ptr = ptr->nextNode())
+    {
+        this->insert(ptr->getData());
+    }
+
+//    technically we don't even need this line because insert increments everything
+//    this->qty = other.qty;
+}
+
+//CHECKED
+template<typename T>
+void linkedList<T>::nukem()
+{
+    cout << "nuking " << this << endl;
+
+    for(baseNode<T> *ptr = anchor; ptr; ptr = anchor)
+    {
+        anchor = anchor->nextNode();
+        ptr->setData(T());
+        delete ptr;
+    }
+
+    qty = 0;
+    maxQty = 0;
+    anchor = NULL;
+}
 
 //+++++++++FIX THE OUTPUT TO THE PREVIOUS //
 // NEED FILE WRITE
@@ -222,39 +277,6 @@ istream& operator>>(istream& in, linkedList<R> &s)
     while(in>>newNode)
         s<<newNode.getData();
     return in;
-}
-
-
-// CHECKED
-template<typename T>
-void linkedList<T>::copy(const linkedList &other)
-{    
-    this->maxQty = other.maxQty;
-
-    for(baseNode<T> *ptr = other.anchor; ptr; ptr = ptr->nextNode())
-    {
-        this->insert(ptr->getData());
-    }
-
-//    technically we don't even need this line because insert increments everything
-//    this->qty = other.qty;
-}
-
-//CHECKED, just need to remove cout
-template<typename T>
-void linkedList<T>::nukem()
-{
-    cout << "nuking " << this << endl;
-    for(baseNode<T> *ptr = anchor; ptr; ptr = anchor)
-    {
-        anchor = anchor->nextNode();
-        ptr->setData(T());
-        delete ptr;
-    }
-
-    qty = 0;
-    maxQty = 0;
-    anchor = NULL;
 }
 
 
