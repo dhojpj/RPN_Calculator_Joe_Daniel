@@ -36,14 +36,10 @@ fraction::fraction(double x)
         tempX=tempX*10;
         denom *=10;
 
-        //std::cout<<"tempx: "<<tempX<<" tempX: int: "<<(int) tempX<<std::endl;
-        //std::cout<<"texP : "<<tempX<<std::endl;
-
-        // stop the infinity loop here
         if(tempX > 90000000 || tempX < -90000000)
             break;
-
     }
+
     num = tempX;
     reduce();
 }
@@ -80,12 +76,12 @@ fraction& fraction::operator=(double other)
     return *this;
 }
 
-int fraction::get_num()
+int fraction::get_num() const
 {
     return num;
 }
 
-int fraction::get_denom()
+int fraction::get_denom() const
 {
     return denom;
 }
@@ -235,30 +231,24 @@ int fraction::gcd(int p, int q)
 
 
 // need to remove the first const
-fraction& operator+(const fraction &x, const fraction &y)
+fraction operator+(const fraction &x, const fraction &y)
 {
-    int n = x.num*y.denom+x.denom*y.num;
-    int d = x.denom*y.denom;
-    //fraction a (n,d);
-    //return a;
-    //int n = x.get_num()*y.get_denom()-x.get_denom()*y.get_num();
-    //int d = x.get_denom()*y.get_denom();
-    //int ja = x.num;
-    //int n = x.num*y.denom+x.denom*y.num;
-    //int d = x.denom*y.denom;
-    fraction *a = new fraction(n,d);
-    return *a;
+
+    int n = x.get_num()*y.get_denom()-x.get_denom()*y.get_num();
+    int d = x.get_denom()*y.get_denom();
+    fraction a(n,d);
+    return a;
 }
 
-fraction& operator-(const fraction &x, const fraction &y)
+fraction operator-(const fraction &x, const fraction &y)
 {
     int n = x.num*y.denom-x.denom*y.num;
     int d = x.denom*y.denom;
-    fraction *a = new fraction(n,d);
-    return *a;
+    fraction a(n,d);
+    return a;
 }
 
-fraction& operator*(const fraction &x, const fraction &y)
+fraction operator*(const fraction &x, const fraction &y)
 {
     int n = x.num*y.num;
     int d = x.denom*y.denom;
@@ -266,7 +256,7 @@ fraction& operator*(const fraction &x, const fraction &y)
     return a;
 }
 
-fraction& operator/(const fraction &x, const fraction &y)
+fraction operator/(const fraction &x, const fraction &y)
 {
     int n = x.num*y.denom;
     int d = x.denom*y.num;
@@ -275,16 +265,16 @@ fraction& operator/(const fraction &x, const fraction &y)
 }
 
 //+++++++++++++++++++++++++++++++++++++
-fraction& operator^(const fraction &x, const fraction &y){}
+fraction operator^(const fraction &x, const fraction &y){}
 
 
-fraction& operator+(const fraction &x, int y)
+fraction operator+(const fraction &x, int y)
 {
     fraction fraX(y);
     return (x+fraX);
 }
 
-fraction& operator-(const fraction &x, int y)
+fraction operator-(const fraction &x, int y)
 {
     fraction c(y,1);
 //    this->num = x.num*c.denom-x.denom*c.num;
@@ -295,42 +285,42 @@ fraction& operator-(const fraction &x, int y)
     return (x - c);
 }
 
-fraction& operator*(const fraction &x, int y)
+fraction operator*(const fraction &x, int y)
 {
     fraction fraX(y);
     return (x*fraX);
 }
 
-fraction& operator/(const fraction &x, int y)
+fraction operator/(const fraction &x, int y)
 {
     fraction fraX(y);
     return (x/fraX);
 }
 
-fraction& operator^(const fraction &x, int y)
+fraction operator^(const fraction &x, int y)
 {
 
 }
 
-fraction& operator+(int x, const fraction &y)
+fraction operator+(int x, const fraction &y)
 {
     fraction fraX(y);
     return (x+fraX);
 }
 
-fraction& operator-(int x, const fraction &y)
+fraction operator-(int x, const fraction &y)
 {
     fraction fraX(y);
     return (x-fraX);
 }
 
-fraction& operator*(int x, const fraction &y)
+fraction operator*(int x, const fraction &y)
 {
     fraction fraX(y);
     return (x*fraX);
 }
 
-fraction& operator/(int x, const fraction &y)
+fraction operator/(int x, const fraction &y)
 {
     fraction fraX(y);
     return (x/fraX);
@@ -338,55 +328,55 @@ fraction& operator/(int x, const fraction &y)
 
 
 ////++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-fraction& operator^(int x, const fraction &y){}
+fraction operator^(int x, const fraction &y){}
 
 
-fraction& operator+(const fraction &x, double y)
+fraction operator+(const fraction &x, double y)
 {
     fraction fraX(y);
     return (x+fraX);
 }
 
-fraction& operator-(const fraction &x, double y)
+fraction operator-(const fraction &x, double y)
 {
     fraction fraX(y);
     return (x-fraX);
 }
 
-fraction& operator*(const fraction &x, double y)
+fraction operator*(const fraction &x, double y)
 {
     fraction fraX(y);
     return (x*fraX);
 }
 
-fraction& operator/(const fraction &x, double y)
+fraction operator/(const fraction &x, double y)
 {
     fraction fraX(y);
     return (x/fraX);
 }
 
 ////++++++++++++++++++++++++++++++++++++++++++++++++++++++
-fraction& operator^(const fraction &x, double y){}
+fraction operator^(const fraction &x, double y){}
 
-fraction& operator+(double x, const fraction &y)
+fraction operator+(double x, const fraction &y)
 {
     fraction fraX(x);
     return (fraX+y);
 }
 
-fraction& operator-(double x, const fraction &y)
+fraction operator-(double x, const fraction &y)
 {
     fraction fraX(x);
     return (fraX-y);
 }
 
-fraction& operator*(double x, const fraction &y)
+fraction operator*(double x, const fraction &y)
 {
     fraction fraX(x);
     return (fraX*y);
 }
 
-fraction& operator/(double x, const fraction &y)
+fraction operator/(double x, const fraction &y)
 {
     fraction fraX(x);
     return (fraX/y);
@@ -394,7 +384,7 @@ fraction& operator/(double x, const fraction &y)
 
 
 ///++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-fraction& operator^(double x, const fraction &y){}
+fraction operator^(double x, const fraction &y){}
 
 
 bool operator==(const fraction &x, const fraction &y)
@@ -540,13 +530,13 @@ bool operator<(const fraction &x, double y)
 bool operator>(const fraction &x, double y)
 {
     fraction tempFra(y);
-    return (x>tempFra);
+    return (tempFra>x);
 }
 
 bool operator==(double x, const fraction &y)
 {
     fraction tempFra(x);
-    return (x==tempFra);
+    return (tempFra==y);
 }
 
 

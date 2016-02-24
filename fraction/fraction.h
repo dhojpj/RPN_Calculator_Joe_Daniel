@@ -28,9 +28,10 @@ public:
     fraction& operator=(const fraction &other);
     fraction& operator=(int other);
     fraction& operator=(double other);
-    int get_num();
-    int get_denom();
+    int get_num() const;
+    int get_denom() const;
     void setValue(int n = 0, int d = 1);
+
 
     fraction& operator+=(const fraction &other);
     fraction& operator-=(const fraction &other);
@@ -51,57 +52,57 @@ public:
 
     // need to remove the first const
     friend
-    fraction& operator+(const fraction &x, const fraction &y);
+    fraction operator+(const fraction &x, const fraction &y);
     friend
-    fraction& operator-(const fraction &x, const fraction &y);
+    fraction operator-(const fraction &x, const fraction &y);
     friend
-    fraction& operator*(const fraction &x, const fraction &y);
+    fraction operator*(const fraction &x, const fraction &y);
     friend
-    fraction& operator/(const fraction &x, const fraction &y);
+    fraction operator/(const fraction &x, const fraction &y);
     friend
-    fraction& operator^(const fraction &x, const fraction &y);
+    fraction operator^(const fraction &x, const fraction &y);
 
     friend
-    fraction& operator+(const fraction &x, int y);
+    fraction operator+(const fraction &x, int y);
     friend
-    fraction& operator-(const fraction &x, int y);
+    fraction operator-(const fraction &x, int y);
     friend
-    fraction& operator*(const fraction &x, int y);
+    fraction operator*(const fraction &x, int y);
     friend
-    fraction& operator/(const fraction &x, int y);
+    fraction operator/(const fraction &x, int y);
     friend
-    fraction& operator^(const fraction &x, int y);
+    fraction operator^(const fraction &x, int y);
     friend
-    fraction& operator+(int x, const fraction &y);
+    fraction operator+(int x, const fraction &y);
     friend
-    fraction& operator-(int x, const fraction &y);
+    fraction operator-(int x, const fraction &y);
     friend
-    fraction& operator*(int x, const fraction &y);
+    fraction operator*(int x, const fraction &y);
     friend
-    fraction& operator/(int x, const fraction &y);
+    fraction operator/(int x, const fraction &y);
     friend
-    fraction& operator^(int x, const fraction &y);
+    fraction operator^(int x, const fraction &y);
 
     friend
-    fraction& operator+(const fraction &x, double y);
+    fraction operator+(const fraction &x, double y);
     friend
-    fraction& operator-(const fraction &x, double y);
+    fraction operator-(const fraction &x, double y);
     friend
-    fraction& operator*(const fraction &x, double y);
+    fraction operator*(const fraction &x, double y);
     friend
-    fraction& operator/(const fraction &x, double y);
+    fraction operator/(const fraction &x, double y);
     friend
-    fraction& operator^(const fraction &x, double y);
+    fraction operator^(const fraction &x, double y);
     friend
-    fraction& operator+(double x, const fraction &y);
+    fraction operator+(double x, const fraction &y);
     friend
-    fraction& operator-(double x, const fraction &y);
+    fraction operator-(double x, const fraction &y);
     friend
-    fraction& operator*(double x, const fraction &y);
+    fraction operator*(double x, const fraction &y);
     friend
-    fraction& operator/(double x, const fraction &y);
+    fraction operator/(double x, const fraction &y);
     friend
-    fraction& operator^(double x, const fraction &y);
+    fraction operator^(double x, const fraction &y);
 
     friend
     bool operator==(const fraction &x, const fraction &y);

@@ -15,7 +15,7 @@ class mixed : public fraction
     public:
         mixed(int w = 0, int n = 0, int d = 1);
         mixed(const fraction& x);
-        mixed(int x);
+        mixed(long x);
         mixed(double x);
         mixed(const mixed &x);
         mixed(int x, const fraction &f);

@@ -7,6 +7,7 @@ SOURCES += main.cpp \
     fraction.cpp \
     mixed.cpp
 
+
 HEADERS += \
     fraction.h \
     mixed.h

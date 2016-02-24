@@ -9,10 +9,22 @@ void addition();
 
 int main()
 {
-
-    /// comment in the test u want u run
     fraction half(11,2);
+    fraction double1(2.2222);
+    cout<<"double1: "<<double1<<endl;
+    mixed half2(2.22);
+
+    mixed ten(double1);
+    cout<<"ten: "<<ten<<endl;
+    cout<<"half2: "<<half2<<endl;
+    cout<<"---: "<<half-double1<<endl;
     //test_constructor();
+
+    mixed newhalf(double1);
+    mixed newhalf2(2.0);
+    mixed newhalf3(20.0);
+    cout<<"newhalf2"<<newhalf2<<endl;
+    cout<<"ddd: "<<newhalf<<endl;
 
     //test_boolean_double();
     addition();
