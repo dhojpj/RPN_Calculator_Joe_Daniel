@@ -19,7 +19,7 @@ public:
     linkedList(int maxSize = 10);
     virtual ~linkedList();
     linkedList(const linkedList &other);
-    linkedList operator = (const linkedList &other);
+    linkedList operator=(const linkedList &other);
 
     bool empty();
     bool full();
@@ -38,12 +38,15 @@ public:
 
 
 
+    // should be protected
+    void insert(T data);
+    void erase(void *whom);
+
 protected:
     baseNode<T> *anchor;
     unsigned int qty, maxQty;
 
-    void insert(T data);
-    void erase(void *whom);
+
 
 
 private:
@@ -54,6 +57,7 @@ private:
 template<typename T>
 linkedList<T>::linkedList(int maxSize)
 {
+    cout << "constructed  " << this << endl;
     qty = 0;
     maxQty = maxSize;
     anchor = NULL;
@@ -62,18 +66,22 @@ linkedList<T>::linkedList(int maxSize)
 template<typename T>
 linkedList<T>::~linkedList()
 {
+        cout << "destructed " << this << endl;
     nukem();
 }
 
 template<typename T>
 linkedList<T>::linkedList(const linkedList &other)
 {
+    cout << "copying " << this << endl;
     copy(other);
 }
 
+//==================NEED TO CHECK THIS================
 template<typename T>
-linkedList<T> linkedList<T>::operator =(const linkedList<T> &other)
+linkedList<T> linkedList<T>::operator=(const linkedList<T> &other)
 {
+    cout << "= called\n";
     if(this != &other)
     {
         nukem();
@@ -82,31 +90,35 @@ linkedList<T> linkedList<T>::operator =(const linkedList<T> &other)
     return *this;
 }
 
-
+//==================NEED TO CHECK THIS================
 template<typename T>
 bool linkedList<T>::empty()
 {
     return !qty;
 }
 
+//==================NEED TO CHECK THIS================
 template<typename T>
 bool linkedList<T>::full()
 {
     return qty == maxQty;
 }
 
+// CHECKED
 template<typename T>
 unsigned int linkedList<T>::size()
 {
     return qty;
 }
 
+//==================NEED TO CHECK THIS================
 template<typename T>
 unsigned int linkedList<T>::max_size()
 {
     return maxQty;
 }
 
+// CHECKED, JUST NEED TO FIX OUTPUT ONCE EVERYTHING IS DEBUGGED
 template<typename T>
 void linkedList<T>::insert(T data)
 {    
@@ -116,6 +128,8 @@ void linkedList<T>::insert(T data)
     // constructing with the data in parameter
     baseNode<T> *newNode = new baseNode<T>(data);
     ++qty;
+    //+++++++++++++++++++++++++++this line just makes sure the addresses are the same when repointing
+    cout << newNode << "   " << data << endl;
 
     //when it's empty
     if(!anchor)
@@ -152,6 +166,7 @@ void linkedList<T>::insert(T data)
 
 }
 
+//==================NEED TO CHECK THIS================
 template<typename T>
 T linkedList<T>::remove()
 {
@@ -174,6 +189,7 @@ T linkedList<T>::remove()
     return d;
 }
 
+//==================NEED TO CHECK THIS================
 template<typename T>
 void linkedList<T>::resize(unsigned int s)
 {
@@ -182,16 +198,21 @@ void linkedList<T>::resize(unsigned int s)
 }
 
 
+//+++++++++FIX THE OUTPUT TO THE PREVIOUS //
+// NEED FILE WRITE
 template<typename R>
 ostream& operator<<(ostream& out, const linkedList<R> &s)
 {
     baseNode<R> *ptr = s.anchor;
-    // baseNode<R> *ptrt = s.tail;
+
     for(; ptr; ptr = ptr->nextNode())
-        out<<"Data: "<<ptr->getData()<<endl;
+//        out<<"Data: "<<ptr->getData()<<endl;
+        out<< ptr << "    " << ptr->getData()<<endl;
     return out;
 }
 
+//==================NEED TO CHECK THIS================
+// NEED FILE READ
 template<typename R>
 istream& operator>>(istream& in, linkedList<R> &s)
 {
@@ -201,10 +222,17 @@ istream& operator>>(istream& in, linkedList<R> &s)
     return in;
 }
 
-
+//==================NEED TO CHECK THIS================
 template<typename T>
 void linkedList<T>::copy(const linkedList &other)
-{    cout << "copy here0\n";
+{
+
+    if (!this)
+    {
+        cout << "wth\n";
+    }
+
+    cout << "copy here0\n";
 
      //this->qty = other.qty; // don't need this cuz insert will add the size
      this->maxQty = other.maxQty;
@@ -214,7 +242,7 @@ void linkedList<T>::copy(const linkedList &other)
       for(baseNode<T> *ptr = other.anchor; ptr; ptr = ptr->nextNode())
       {
           std::cout<<"copydata: "<<ptr->getData()<<" index: "<<i<<"\n";
-          this->insertanchor(ptr->getData());
+          this->insert(ptr->getData());
           ++i;
       }
 
@@ -223,9 +251,11 @@ void linkedList<T>::copy(const linkedList &other)
 
 }
 
+//==================NEED TO CHECK THIS================
 template<typename T>
 void linkedList<T>::nukem()
 {
+    cout << "nuking " << this << endl;
     for(baseNode<T> *ptr = anchor; ptr; ptr = anchor)
     {
         anchor = anchor->nextNode();

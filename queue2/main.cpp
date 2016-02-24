@@ -14,7 +14,27 @@ int main()
 
 
 
+    srand(time(NULL));
 
+    linkedList<int>* l = new linkedList<int>;
+
+    for (int i = 0; i < 10; ++i)
+    {
+
+
+        l->insert(rand() % 100);
+    }
+
+
+
+    linkedList<int>* m = new linkedList<int>;
+
+    *m = *l;
+
+    cout << endl << "l:\n" << *l << endl;
+    cout << l->size() << endl << endl;
+    cout << "m:\n" << *m << endl;
+    cout << m->size() << endl << endl;
 
     return 0;
 }
