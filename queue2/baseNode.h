@@ -22,6 +22,9 @@ public:
     baseNode*& nextNode(); // lhs and rhs
     void setNext(baseNode* nNode);
 
+    baseNode& operator<<(T d);
+    baseNode& operator>>(T& d);
+
     // const at the end prevents changes to *this
     bool operator<(const baseNode &x) const;
     bool operator<=(const baseNode &x) const;
@@ -31,10 +34,10 @@ public:
     bool operator!=(const baseNode &x) const;
 
     template<typename R>
-    friend ostream& operator << (ostream& out, const baseNode<R>& whom);
+    friend ostream& operator<<(ostream& out, const baseNode<R>& whom);
 
     template<typename R>
-    friend istream& operator >> (istream& in, baseNode<R>& whom);
+    friend istream& operator>>(istream& in, baseNode<R>& whom);
 
 protected:
     T data;
@@ -139,25 +142,52 @@ bool baseNode<T>::operator!=(const baseNode<T> &x) const
 
 //need file write data ++++++++++++++++++++++++++++++++++++++++++++++++++
 template<typename R>
-ostream& operator << (ostream& out, const baseNode<R>& whom)
+ostream& operator<<(ostream& out, const baseNode<R>& whom)
 {
     if (out == cout)
     {
         out << "Data: " << whom.getData();
     }
+    else // writing to a file
+    {
+
+    }
+
     return out;
+}
+
+template<typename T>
+baseNode<T>& baseNode<T>::operator<<(T d)
+{
+    this->data = d;
+
+    return *this;
 }
 
 //need file read data ++++++++++++++++++++++++++++++++++++++++++++++++++
 template<typename R>
-istream& operator >> (istream& in, baseNode<R>& whom)
+istream& operator>>(istream& in, baseNode<R>& whom)
 {
+    cout << "basenode >> (in, whom)\n";
     if (in == cin)
     {
         cout << "Enter data: ";
         in >> whom.data;
     }
+    else // reading from a file
+    {
+            in >> whom.data;
+//            whom.getData(d);
+    }
     return in;
+}
+
+template<typename T>
+baseNode<T>& baseNode<T>::operator>>(T& d)
+{
+    d = this->data;
+
+    return *this;
 }
 
 

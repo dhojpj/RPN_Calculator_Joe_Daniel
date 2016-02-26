@@ -1,50 +1,51 @@
 
 #include "linkedlist.h"
-//#include "baseNode.h"
+#include <fstream>
 #include <iostream>
-//#include <string>
-//#include "queue2.h"
-//#include "queue.h"
 #include <stdio.h>
 #include <time.h>
 using namespace std;
 
 int main()
 {
+    ifstream fin;
+
+    fin.open("num.txt");
 
 
-
-    srand(time(NULL));
-
-    linkedList<int>* l = new linkedList<int>;
-
-    for (int i = 0; i < 10; ++i)
+    if(!fin.is_open())
     {
-
-
-
-        l->insert(rand() % 100);
-
+        cout << "fin error\n";
+        exit(1);
     }
+    else
+        cout << "fin opened!\n";
 
 
-    cout << "\nl = " << l << endl << *l << endl;
-    cout << "l size = " << l->size() << endl;
-    cout << "empty? " << l->empty() << endl;
-    cout << "full? " << l->full() <<endl;
+    linkedList<int> *m = new linkedList<int>;
 
-    for (size_t i = 0; i < l->max_size(); ++i)
+    fin >> *m;
+
+    cout << *m << endl;
+
+
+    ofstream fout;
+
+    fout.open("num2.txt");
+
+    fout << *m;
+
+
+    if(!fout.is_open())
     {
-
-        cout << l->remove() << " is popped \n";
-
+        cout << "fout error\n";
+        exit(1);
     }
+    else
+        cout << "fout opened!\n";
 
-    cout << "\nl = " << l << endl << *l << endl;
-    cout << "l size = " << l->size() << endl;
-    cout << "\nl = " << l << endl << *l << endl;
-    cout << "empty? " << l->empty() << endl;
-    cout << "full? " << l->full() <<endl <<endl;
+    fin.close();
+    fout.close();
 
     return 0;
 }
@@ -196,6 +197,59 @@ l = 0xb22e50
 l size = 0  l max = 5
 
 Press <RETURN> to close this window...
+
+************************
+
+cout!
+0x572fa8    24352
+0x572f98    1
+0x572f88    452345
+0x572f78    666
+0x572f38    555
+0x572f28    245
+
+z = 24352
+Press <RETURN> to close this window...
+
+    -------------------
+
+    linkedList<int> *m = new linkedList<int>;
+
+    *m << 245 << 555 << 666 << 452345 << 1 << 24352;
+
+    cout << *m << endl;
+
+    int z;
+
+    *m >> z;
+
+    cout << "z = " << z << endl;
+
+************************
+
+    baseNode<int> *b = new baseNode<int>;
+
+
+    *b << 555;
+    cout << *b << endl;
+
+    int c;
+
+    *b >> c;
+
+    cout << "c = " << c << endl;
+
+---------
+
+Data: 555
+c = 555
+Press <RETURN> to close this window...
+
+
+
+
+
+
 
 ************************
 

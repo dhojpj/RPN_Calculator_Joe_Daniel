@@ -21,6 +21,7 @@ public:
     linkedList(const linkedList &other);
     linkedList operator=(const linkedList &other);
 
+
     bool empty();
     bool full();
 
@@ -28,7 +29,11 @@ public:
     unsigned int max_size();
 
     T remove();
+    T peek();
     void resize(unsigned int s);
+
+    linkedList& operator<<(T d);
+    linkedList& operator>>(T& d);
 
     template<typename R>
     friend ostream& operator<<(ostream& out, const linkedList<R> &s);
@@ -143,52 +148,21 @@ void linkedList<T>::insert(T data)
             anchor = newNode;
         }
         ++qty;
-
-
-    /*
-     * if(qty == maxQty)
-        throw FULLLINKEDLIST_ERROR;
-
-    // constructing with the data in parameter
-    baseNode<T> *newNode = new baseNode<T>(data);
-    ++qty;
-    //+++++++++++++++++++++++++++this line just makes sure the addresses are the same when repointing
-    cout << newNode << "   " << data << endl;
-
-    //when it's empty
-    if(!anchor)
-    {
-        anchor = newNode; // and newNode's next is already NULL
-    }
-    else
-    {
-        baseNode<T> *i = anchor;
-        for(;   // while there's a nextnode an the next is less than the data
-            i->nextNode() && i->nextNode()->getData() < data;
-            i = i->nextNode());
-
-
-        // if the data entered is less than the anchor
-        if ((anchor == i) && (i->getData() > data))
-        {
-            newNode->nextNode() = anchor;
-            anchor = newNode;
-            return;
-        }
-        else if (!i) // or if it gets to the end without finding anything
-        {
-            i->nextNode() = newNode;
-            return;
-        }
-
-        // no need for else bracket
-        // but it's found something where data is bigger than previous node
-        // so the data must be
-        newNode->nextNode() = i->nextNode();
-        i->nextNode() = newNode;
-    }
-*/
 }
+
+// CHECKED
+template<typename T>
+T linkedList<T>::peek()
+{
+    if(!anchor)
+        throw EMPTYLINKEDLIST_ERROR;
+
+    // get data and move anchor to the next node
+    T d = anchor->getData();
+
+    return d;
+}
+
 
 // CHECKED
 template<typename T>
@@ -255,6 +229,25 @@ void linkedList<T>::nukem()
     anchor = NULL;
 }
 
+
+template<typename T>
+linkedList<T>& linkedList<T>::operator<<(T d)
+{
+    this->insert(d);
+
+    return *this;
+}
+
+template<typename T>
+linkedList<T>& linkedList<T>::operator>>(T& d)
+{
+    d = this->peek();
+
+    return *this;
+}
+
+
+
 //+++++++++FIX THE OUTPUT TO THE PREVIOUS //
 // NEED FILE WRITE
 template<typename R>
@@ -262,9 +255,11 @@ ostream& operator<<(ostream& out, const linkedList<R> &s)
 {
     baseNode<R> *ptr = s.anchor;
 
-    for(; ptr; ptr = ptr->nextNode())
-//        out<<"Data: "<<ptr->getData()<<endl;
-        out<< ptr << "    " << ptr->getData()<<endl;
+
+        for(; ptr; ptr = ptr->nextNode())
+    //        out<<"Data: "<<ptr->getData()<<endl;
+            out<< ptr << "    " << ptr->getData()<<endl;
+
     return out;
 }
 
@@ -273,9 +268,14 @@ ostream& operator<<(ostream& out, const linkedList<R> &s)
 template<typename R>
 istream& operator>>(istream& in, linkedList<R> &s)
 {
-    baseNode<R> newNode;
-    while(in>>newNode)
-        s<<newNode.getData();
+    cout << "linkedlist >> (in, s)\n";
+//    if (in == cin)
+//    {
+        cout << "cin!\n";
+        baseNode<R> newNode;
+        while(in>>newNode)
+            s << newNode.getData();
+//    }
     return in;
 }
 
