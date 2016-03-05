@@ -164,21 +164,14 @@ baseNode<T>& baseNode<T>::operator<<(T d)
     return *this;
 }
 
+// this is more straightforward writing
+// got rid of the menu; let the children take care of the file writing
 //need file read data ++++++++++++++++++++++++++++++++++++++++++++++++++
 template<typename R>
 istream& operator>>(istream& in, baseNode<R>& whom)
 {
-    cout << "basenode >> (in, whom)\n";
-    if (in == cin)
-    {
-        cout << "Enter data: ";
-        in >> whom.data;
-    }
-    else // reading from a file
-    {
-            in >> whom.data;
-//            whom.getData(d);
-    }
+    in >> whom.data;
+
     return in;
 }
 

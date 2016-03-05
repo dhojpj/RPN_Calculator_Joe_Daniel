@@ -1,5 +1,6 @@
 
-#include "linkedlist.h"
+//#include "linkedlist.h"
+#include "Stack.h"
 #include <fstream>
 #include <iostream>
 #include <stdio.h>
@@ -8,44 +9,22 @@ using namespace std;
 
 int main()
 {
-    ifstream fin;
 
-    fin.open("num.txt");
+    Stack<int> *s = new Stack<int>;
 
+    int j;
 
-    if(!fin.is_open())
+    for(size_t i = 0; i < 10; ++i)
     {
-        cout << "fin error\n";
-        exit(1);
+        j = rand() % 999;
+        cout << i << " = " << j << endl;
+        s->push(j);
     }
-    else
-        cout << "fin opened!\n";
 
+    cout << endl;
 
-    linkedList<int> *m = new linkedList<int>;
+    cout << *s << endl;
 
-    fin >> *m;
-
-    cout << *m << endl;
-
-
-    ofstream fout;
-
-    fout.open("num2.txt");
-
-    fout << *m;
-
-
-    if(!fout.is_open())
-    {
-        cout << "fout error\n";
-        exit(1);
-    }
-    else
-        cout << "fout opened!\n";
-
-    fin.close();
-    fout.close();
 
     return 0;
 }
@@ -253,6 +232,44 @@ Press <RETURN> to close this window...
 
 ************************
 
+    ifstream fin;
+
+    fin.open("num.txt");
+
+
+    if(!fin.is_open())
+    {
+        cout << "fin error\n";
+        exit(1);
+    }
+    else
+        cout << "fin opened!\n";
+
+
+    linkedList<int> *m = new linkedList<int>;
+
+    fin >> *m;
+
+    cout << *m << endl;
+
+
+    ofstream fout;
+
+    fout.open("num2.txt");
+
+    fout << *m;
+
+
+    if(!fout.is_open())
+    {
+        cout << "fout error\n";
+        exit(1);
+    }
+    else
+        cout << "fout opened!\n";
+
+    fin.close();
+    fout.close();
 
 
  */

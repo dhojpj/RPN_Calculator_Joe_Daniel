@@ -8,5 +8,6 @@ SOURCES += \
 
 HEADERS += \
     baseNode.h \
-    linkedlist.h
+    linkedlist.h \
+    Stack.h
 
