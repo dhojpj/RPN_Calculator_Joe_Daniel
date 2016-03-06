@@ -1,6 +1,4 @@
-
-//#include "linkedlist.h"
-#include "Stack.h"
+#include "Queue.h"
 #include <fstream>
 #include <iostream>
 #include <stdlib.h>
@@ -9,50 +7,9 @@ using namespace std;
 
 int main()
 {
-    srand(time(NULL));
-
-    Stack<string> *s = new Stack<string>;
-
-//    int j;
-
-//    for(size_t i = 0; i < 9; ++i)
-//    {
-//        j = rand() % 999;
-//        cout << i << " = " << j << endl;
-//        s->push(j);
-//    }
-
-//    bool valid = true;
-
-//    while (valid)
-//    {
-//        try
-//        {
-            cin >> *s;
-            cin >> *s;
-//        }
-//        catch(int s)
-//        {
-//            cout << s << "\tstack full\n";
-//            valid = false;
-
-//        }
-//    }
-
-    cout << endl;
-
-    cout << *s << endl;
-
-    cout << "popping\n";
-
-    int j = s->size();
-
-        for(size_t i = 0; i < j; ++i)
-        {
-            cout << i << "\t" << s->pop() << endl;
-        }
 
     return 0;
+
 }
 
 
@@ -296,6 +253,99 @@ Press <RETURN> to close this window...
 
     fin.close();
     fout.close();
+
+    *********************************
+
+    Stack<int> *m = new Stack<int>;
+
+
+    ifstream fin;
+
+    fin.open("num.txt");
+
+
+    if(!fin.is_open())
+    {
+        cout << "fin error\n";
+        exit(1);
+    }
+    else
+        cout << "fin opened!\n";
+
+
+try
+    {
+        fin >> *m;
+
+    }
+    catch(...)
+    {
+        cout << "Too much data\n";
+    }
+
+    cout << *m << endl;
+
+
+    ofstream fout;
+
+    fout.open("num2.txt");
+
+    fout << *m;
+
+
+    if(!fout.is_open())
+    {
+        cout << "fout error\n";
+        exit(1);
+    }
+    else
+        cout << "fout opened!\n";
+
+    fin.close();
+    fout.close();
+
+
+
+    cout << endl;
+
+    cout << *m << endl;
+
+    cout << "popping\n";
+
+    int j = m->size();
+
+        for(size_t i = 0; i < j; ++i)
+        {
+            cout << i << "\t" << m->pop() << endl;
+        }
+
+
+*********************************
+
+    srand(time(NULL));
+
+
+    Stack<int> *s = new Stack<int>;
+
+    int j;
+    for (unsigned int i = 0; i < s->max_size(); ++i)
+    {
+        j = rand() % 155;
+        s->push(j);
+        cout << i << "\t" << s->peek() << endl;
+    }
+
+    cout << *s << endl;
+
+    cout << "popping\n";
+
+
+        for(size_t i = 0; i < s->max_size(); ++i)
+        {
+            cout << i << "\t"  << s->pop() << endl;
+        }
+
+
 
 
  */

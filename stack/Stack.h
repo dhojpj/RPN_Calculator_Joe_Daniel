@@ -2,7 +2,7 @@
 #define STACK_H
 
 #include <iostream>
-#include "baseNode.h"
+#include "Node.h"
 
 using std::cout;
 using std::cin;
@@ -47,7 +47,7 @@ public:
 //    void erase(void *whom);
 
 protected:
-    baseNode<T> *header;
+    Node<T> *header;
     unsigned int qty, maxQty;
 
 
@@ -125,7 +125,7 @@ void Stack<T>::push(T data)
     if(qty == maxQty)
             throw STACK_FULL;
 
-        baseNode<T> *newNode = new baseNode<T> (data);
+        Node<T> *newNode = new Node<T> (data);
 
 
         //when it's empty
@@ -168,7 +168,7 @@ T Stack<T>::pop()
     // get data and move header to the next node
     T d = header->getData();
 
-    baseNode<T> *temp = header;
+    Node<T> *temp = header;
     header = header->nextNode();
 
     // if the list is empty set header and tail to be empty
@@ -197,7 +197,7 @@ void Stack<T>::copy(const Stack &other)
     this->maxQty = other.maxQty;
 
     // increments automatically
-    for(baseNode<T> *ptr = other.header; ptr; ptr = ptr->nextNode())
+    for(Node<T> *ptr = other.header; ptr; ptr = ptr->nextNode())
     {
         this->push(ptr->getData());
     }
@@ -208,7 +208,7 @@ void Stack<T>::copy(const Stack &other)
 template<typename T>
 void Stack<T>::nukem()
 {
-    for(baseNode<T> *ptr = header; ptr; ptr = header)
+    for(Node<T> *ptr = header; ptr; ptr = header)
     {
         header = header->nextNode();
         ptr->setData(T());
@@ -244,7 +244,7 @@ Stack<T>& Stack<T>::operator>>(T& d)
 template<typename R>
 ostream& operator<<(ostream& out, const Stack<R> &s)
 {
-    baseNode<R> *ptr = s.header;
+    Node<R> *ptr = s.header;
 
         for(; ptr; ptr = ptr->nextNode())
     //        out<<"Data: "<<ptr->getData()<<endl;
@@ -259,7 +259,7 @@ ostream& operator<<(ostream& out, const Stack<R> &s)
 template<typename R>
 istream& operator>>(istream& in, Stack<R> &s)
 {
-    baseNode<R> newNode;
+    Node<R> newNode;
 
     if (in == cin)
     {

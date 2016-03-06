@@ -7,5 +7,6 @@ SOURCES += main.cpp
 
 HEADERS += \
     Stack.h \
-    baseNode.h
+    Node.h \
+    Queue.h
 
