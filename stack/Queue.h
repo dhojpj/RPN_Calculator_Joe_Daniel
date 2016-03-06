@@ -64,7 +64,7 @@ Queue<T>::Queue(unsigned int s)
 template<typename T>
 Queue<T>::~Queue()
 {
-
+    nukem();
 }
 
 template<typename T>
@@ -82,37 +82,45 @@ Queue<T>& Queue<T>::operator=(const Queue<T>& other)
 template<typename T>
 bool Queue<T>::full()
 {
-
+    return qty == max_qty;
 }
 
 template<typename T>
 bool Queue<T>::empty()
 {
-
+    return !qty;
 }
 
 template<typename T>
 unsigned int Queue<T>::max_size()
 {
-
+    return max_qty;
 }
 
 template<typename T>
 unsigned int Queue<T>::size()
 {
-
+    return qty;
 }
 
 template<typename T>
 void Queue<T>::clear()
 {
-
+    nukem();
 }
 
 template<typename T>
 void Queue<T>::resize(unsigned int s)
 {
-
+    if (max_qty <= s)
+    {
+        max_qty = s;
+    }
+    else
+    {
+        nukem();
+        max_qty = s;
+    }
 }
 
 template<typename T>
