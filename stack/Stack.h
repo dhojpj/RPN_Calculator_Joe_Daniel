@@ -46,12 +46,12 @@ public:
     void push(T data);
 //    void erase(void *whom);
 
-protected:
-    Node<T> *header;
-    unsigned int qty, maxQty;
 
 
 private:
+    Node<T> *header;
+    unsigned int qty, maxQty;
+
     void copy(const Stack &other);
     void nukem();
 };

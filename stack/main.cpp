@@ -7,6 +7,40 @@ using namespace std;
 
 int main()
 {
+    Queue<int>* q = new Queue<int>;
+
+    int j;
+    for (unsigned int i = 0; i < q->max_size(); ++i)
+    {
+        j = rand() % 1555;
+        q->enqueue(j);
+        cout << i << "\t" << j << "\t" << q->back() << endl;
+    }
+
+    cout << "cout\n";
+    cout << *q << endl;
+
+
+    // copying
+
+
+
+cout << "dequeueing\n";
+
+    for (unsigned int i = 0; i < q->max_size(); ++i)
+    {
+        cout << i << "\t" << q->dequeue() << endl;
+    }
+
+//    cout << "dequeuing\n";
+
+
+//        for(size_t i = 0; i < s->max_size(); ++i)
+//        {
+//            cout << i << "\t"  << s->pop() << endl;
+//        }
+
+
 
     return 0;
 

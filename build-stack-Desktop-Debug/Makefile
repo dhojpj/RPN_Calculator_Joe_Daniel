@@ -281,8 +281,8 @@ compiler_clean:
 
 ####### Compile
 
-main.o: ../stack/main.cpp ../stack/Stack.h \
-		../stack/baseNode.h
+main.o: ../stack/main.cpp ../stack/Queue.h \
+		../stack/Node.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../stack/main.cpp
 
 ####### Install

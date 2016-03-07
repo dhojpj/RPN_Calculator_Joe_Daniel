@@ -2,11 +2,11 @@
 #define QUEUE_H
 
 #include <iostream>
-#include <cstdlib>
-#include <fstream>
-#include <sstream>
-#include <iomanip>
-#include <string>
+//#include <cstdlib>
+//#include <fstream>
+//#include <sstream>
+//#include <iomanip>
+//#include <string>
 #include "Node.h"
 // use void pointers?
 using std::cin;
@@ -14,7 +14,7 @@ using std::cout;
 using std::ostream;
 using std::istream;
 using std::endl;
-using std::string;
+//using std::string;
 
 enum QUEUE_ERRORS {QUEUE_EMPTY, QUEUE_FULL, BAD_QUEUE_SIZE};
 
@@ -27,6 +27,8 @@ public:
     Queue(const Queue<T>& other);
     Queue<T>& operator=(const Queue<T>& other);
 
+//    Node<T>* getHead();
+//    Node<T>* getTail();
     bool full();
     bool empty();
     unsigned int max_size();
@@ -36,18 +38,21 @@ public:
     Queue<T>& operator<<(const T& data);
     Queue<T>& operator>>(T& data); // return a queue to chain it
     void enqueue(const T& data); // starting at the tail
-    void dequeue(T& data);
+    T& dequeue();
     T& front() const; // so can't change it and won't fire a copy constructor // how??
+    T& back() const;
 
     // friends for when two objects are interacting with each other
     template<typename R>
-    friend ostream& operator<<(ostream& out, const Queue<T>& q);
+    friend ostream& operator<<(ostream& out, const Queue<R>& q);
 
     template<typename R>
     friend istream& operator>>(istream& in, Queue<R>& q);
 
+
 private:
     Node<T> *head, *tail;
+
     unsigned int qty, max_qty;
     void copy(const Queue<T>& other);
     void nukem();
@@ -78,6 +83,20 @@ Queue<T>& Queue<T>::operator=(const Queue<T>& other)
 {
 
 }
+
+
+//template<typename T>
+//Node<T>* Queue<T>::getHead()
+//{
+//    return head;
+//}
+
+//template<typename T>
+//Node<T>* Queue<T>::getTail()
+//{
+//    return tail;
+
+//}
 
 template<typename T>
 bool Queue<T>::full()
@@ -126,31 +145,78 @@ void Queue<T>::resize(unsigned int s)
 template<typename T>
 Queue<T>& Queue<T>::operator<<(const T& data)
 {
+    this->enqueue(data);
 
+    return this;
 }
 
+// how can this can't be a chain if we're not dequing?
 template<typename T>
 Queue<T>& Queue<T>::operator>>(T& data)
 {
+    data = this->front();
 
-}
-// return a queue to chain it
-template<typename T>
-void Queue<T>::enqueue(const T& data)
-{
-
+    return this;
 }
 
 // starting at the tail
+// return a queue to chain it such as in the <<>> operators
 template<typename T>
-void Queue<T>::dequeue(T& data)
+void Queue<T>::enqueue(const T& data)
 {
+    if(this->full())
+    {
+        throw QUEUE_FULL;
+    }
 
+    if(this->empty())
+    {
+        tail = new Node<T>(data);
+        head = tail;
+
+    }
+    else
+    {
+        Node<T>* n = new Node<T>(data);
+        tail->nextNode() = n;
+        tail = n;
+    }
+    ++qty;
 }
+
+// starting at the head
+template<typename T>
+T& Queue<T>::dequeue()
+{
+    if(this->empty())
+    {
+        throw QUEUE_EMPTY;
+    }
+
+    T d = head->getData();
+
+    head = head->nextNode();
+
+    --qty;
+
+    return d;
+}
+
 
 template<typename T>
 T& Queue<T>::front() const
-{} // so can't change it and won't fire a copy constructor // how??
+{
+    T d = head->getData();
+    return d;
+} // so can't change it and won't fire a copy constructor // how??
+
+template<typename T>
+T& Queue<T>::back() const
+{
+    T d = tail->getData();
+    return d;
+} // so can't change it and won't fire a copy constructor // how??
+
 
 template<typename T>
 void Queue<T>::copy(const Queue<T>& other)
@@ -162,15 +228,30 @@ void Queue<T>::copy(const Queue<T>& other)
 template<typename T>
 void Queue<T>::nukem()
 {
+    cout << "nuking\n";
+    Node<T> *ptr = this->head;
 
+    for(; ptr; ptr = ptr->nextNode())
+    {
+        head->data = T();
+    }
+
+    qty = max_qty = 0;
 }
 
 
 // friends for when two objects are interacting with each other
 template<typename R>
-ostream& operator<<(ostream& out, const Queue<R>& q)
+ostream& operator<<(ostream& out, const Queue<R> &q)
 {
+    Node<R> *ptr = q.head;
 
+    for(; ptr; ptr = ptr->nextNode())
+    {
+        out << ptr->getData() << endl;
+    }
+
+    return out;
 }
 
 
