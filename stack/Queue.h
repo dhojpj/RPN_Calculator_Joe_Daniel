@@ -27,20 +27,20 @@ public:
     Queue(const Queue<T>& other);
     Queue<T>& operator=(const Queue<T>& other);
 
-//    Node<T>* getHead();
-//    Node<T>* getTail();
     bool full();
     bool empty();
-    unsigned int max_size();
-    unsigned int size();
+
+    void setMaxSize(unsigned int m);
+    unsigned int getMaxSize() const;
+    unsigned int getSize() const;
     void clear();
     void resize(unsigned int s);
     Queue<T>& operator<<(const T& data);
     Queue<T>& operator>>(T& data); // return a queue to chain it
     void enqueue(const T& data); // starting at the tail
-    T& dequeue();
-    T& front() const; // so can't change it and won't fire a copy constructor // how??
-    T& back() const;
+    T dequeue();
+    T front() const; // so can't change it and won't fire a copy constructor // how??
+    T back() const;
 
     // friends for when two objects are interacting with each other
     template<typename R>
@@ -81,22 +81,10 @@ Queue<T>::Queue(const Queue<T>& other)
 template<typename T>
 Queue<T>& Queue<T>::operator=(const Queue<T>& other)
 {
+    copy(other);
 
+    return *this;
 }
-
-
-//template<typename T>
-//Node<T>* Queue<T>::getHead()
-//{
-//    return head;
-//}
-
-//template<typename T>
-//Node<T>* Queue<T>::getTail()
-//{
-//    return tail;
-
-//}
 
 template<typename T>
 bool Queue<T>::full()
@@ -107,17 +95,28 @@ bool Queue<T>::full()
 template<typename T>
 bool Queue<T>::empty()
 {
-    return !qty;
+    return !qty; // !0 means not false, which is true
 }
 
 template<typename T>
-unsigned int Queue<T>::max_size()
+void Queue<T>::setMaxSize(unsigned int m)
+{
+    if (max_qty > m)
+    {
+        nukem();
+    }
+
+    max_qty = m;
+}
+
+template<typename T>
+unsigned int Queue<T>::getMaxSize() const
 {
     return max_qty;
 }
 
 template<typename T>
-unsigned int Queue<T>::size()
+unsigned int Queue<T>::getSize() const
 {
     return qty;
 }
@@ -186,7 +185,7 @@ void Queue<T>::enqueue(const T& data)
 
 // starting at the head
 template<typename T>
-T& Queue<T>::dequeue()
+T Queue<T>::dequeue()
 {
     if(this->empty())
     {
@@ -203,39 +202,56 @@ T& Queue<T>::dequeue()
 }
 
 
+
 template<typename T>
-T& Queue<T>::front() const
+T Queue<T>::front() const
 {
     T d = head->getData();
     return d;
 } // so can't change it and won't fire a copy constructor // how??
 
 template<typename T>
-T& Queue<T>::back() const
+T Queue<T>::back() const
 {
-    T d = tail->getData();
-    return d;
+//    T d = tail->getData();
+    return tail->getData();
 } // so can't change it and won't fire a copy constructor // how??
 
 
 template<typename T>
 void Queue<T>::copy(const Queue<T>& other)
 {
+    if (&other != this)
+    {
+        nukem();
+        this->setMaxSize(other.getMaxSize());
 
+        Node<T> *ptr = other.head;
+
+        for(;ptr;ptr = ptr->nextNode())
+        {
+
+            this->enqueue(ptr->getData());
+        }
+    }
+    else
+    {
+        cout << "Cannot copy itself\n";
+    }
 }
 
 
 template<typename T>
 void Queue<T>::nukem()
 {
-    cout << "nuking\n";
     Node<T> *ptr = this->head;
 
     for(; ptr; ptr = ptr->nextNode())
     {
-        head->data = T();
+        head->setData(T());
     }
 
+    head = tail = NULL;
     qty = max_qty = 0;
 }
 
@@ -248,7 +264,8 @@ ostream& operator<<(ostream& out, const Queue<R> &q)
 
     for(; ptr; ptr = ptr->nextNode())
     {
-        out << ptr->getData() << endl;
+//        out << ptr->getData() << endl;
+        out << ptr << "\t" << ptr->getData() << endl;
     }
 
     return out;

@@ -10,26 +10,33 @@ int main()
     Queue<int>* q = new Queue<int>;
 
     int j;
-    for (unsigned int i = 0; i < q->max_size(); ++i)
+    for (unsigned int i = 0; i < q->getMaxSize(); ++i)
     {
         j = rand() % 1555;
         q->enqueue(j);
         cout << i << "\t" << j << "\t" << q->back() << endl;
     }
 
-    cout << "cout\n";
+    cout << "cout q\n";
     cout << *q << endl;
 
 
     // copying
+    Queue<int>*m = new Queue<int>;
 
+    *m = *q;
+
+    cout << "cout m\n";
+    cout << *m << endl;
 
 
 cout << "dequeueing\n";
 
-    for (unsigned int i = 0; i < q->max_size(); ++i)
+    for (unsigned int i = 0; i < q->getMaxSize(); ++i)
     {
+
         cout << i << "\t" << q->dequeue() << endl;
+                cout << i << "\t" << m->dequeue() << endl;
     }
 
 //    cout << "dequeuing\n";

@@ -40,13 +40,9 @@ public:
     template<typename R>
     friend istream& operator>>(istream& in, Stack<R> &s);
 
-
-//==========================================================================================
-    // should be protected
+    // should be protected?
     void push(T data);
 //    void erase(void *whom);
-
-
 
 private:
     Node<T> *header;
