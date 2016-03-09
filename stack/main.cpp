@@ -6,14 +6,57 @@
 #include "Parser.h"
 using namespace std;
 
+int add(int x, int y)
+{
+    return x + y;
+}
+
+int sub(int x, int y)
+{
+    return x - y;
+}
+
 int main()
 {
 
-    Parser *p = new Parser;
 
-    cin >> *p ;
 
-    cout << *p;
+
+    int (*i)(int,int) = &add;
+    int (*j)(int,int) = &sub;
+
+    cout << "i = &add" << endl;
+    cout << "&i = " << &i << endl
+         << "i = " << i << endl
+            << "*(*i) = " << *(*i) << endl;
+//    << (*i)(5,56) << endl << endl;
+
+
+    cout << "j = &sub" << endl;
+    cout << "&j = " << &j << endl
+         << "j = " << j << endl
+            << "*j = " << *j << endl << endl;
+//    << (*j)(5,56) << endl << endl;
+
+
+
+
+    cout << "i == j?\t" << (i == j) << endl;
+    cout << "i == i?\t" << (i == i) << endl;
+
+//    cout << "p = " << p << endl
+//         << "&p = " << &p << endl
+//         << "*(int *)p = " << *(int *)p << endl;
+
+//    void *fptr = add;
+
+//    cout << fptr(i,j) << endl;
+
+
+
+
+
+    // calling code
 
     return 0;
 
