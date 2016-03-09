@@ -1,53 +1,19 @@
-#include "Queue.h"
+//#include "Queue.h"
 #include <fstream>
 #include <iostream>
 #include <stdlib.h>
 #include <time.h>
+#include "Parser.h"
 using namespace std;
 
 int main()
 {
-    Queue<int>* q = new Queue<int>;
 
-    int j;
-    for (unsigned int i = 0; i < q->getMaxSize(); ++i)
-    {
-        j = rand() % 1555;
-        q->enqueue(j);
-        cout << i << "\t" << j << "\t" << q->back() << endl;
-    }
+    Parser *p = new Parser;
 
-    cout << "cout q\n";
-    cout << *q << endl;
+    cin >> *p ;
 
-
-    // copying
-    Queue<int>*m = new Queue<int>;
-
-    *m = *q;
-
-    cout << "cout m\n";
-    cout << *m << endl;
-
-
-cout << "dequeueing\n";
-
-    for (unsigned int i = 0; i < q->getMaxSize(); ++i)
-    {
-
-        cout << i << "\t" << q->dequeue() << endl;
-                cout << i << "\t" << m->dequeue() << endl;
-    }
-
-//    cout << "dequeuing\n";
-
-
-//        for(size_t i = 0; i < s->max_size(); ++i)
-//        {
-//            cout << i << "\t"  << s->pop() << endl;
-//        }
-
-
+    cout << *p;
 
     return 0;
 
@@ -386,6 +352,63 @@ try
             cout << i << "\t"  << s->pop() << endl;
         }
 
+
+
+*********************************
+
+
+    Queue<int>* q = new Queue<int>;
+
+    int j;
+    for (unsigned int i = 0; i < q->getMaxSize(); ++i)
+    {
+        j = rand() % 1555;
+        q->enqueue(j);
+        cout << i << "\t" << j << "\t" << q->back() << endl;
+    }
+
+    cout << "cout q\n";
+    cout << *q << endl;
+
+
+    // copying
+    Queue<int>*m = new Queue<int>;
+
+    *m = *q;
+
+    cout << "cout m\n";
+    cout << *m << endl;
+
+
+cout << "dequeueing\n";
+
+    for (unsigned int i = 0; i < q->getMaxSize(); ++i)
+    {
+
+        cout << i << "\t" << q->dequeue() << endl;
+                cout << i << "\t" << m->dequeue() << endl;
+    }
+
+//    cout << "dequeuing\n";
+
+
+//        for(size_t i = 0; i < s->max_size(); ++i)
+//        {
+//            cout << i << "\t"  << s->pop() << endl;
+//        }
+
+
+
+
+
+*********************************
+
+
+
+*********************************
+
+
+*********************************
 
 
 

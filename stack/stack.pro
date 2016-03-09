@@ -8,5 +8,6 @@ SOURCES += main.cpp
 HEADERS += \
     Stack.h \
     Node.h \
-    Queue.h
+    Queue.h \
+    Parser.h
 

@@ -105,8 +105,10 @@ compiler_clean:
 
 ####### Compile
 
-debug/main.o: ../stack/main.cpp ../stack/Queue.h \
-		../stack/Node.h
+debug/main.o: ../stack/main.cpp ../stack/Parser.h \
+		../stack/Queue.h \
+		../stack/Node.h \
+		../stack/Stack.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\main.o ..\stack\main.cpp
 
 ####### Install
