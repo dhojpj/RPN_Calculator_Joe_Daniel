@@ -22,20 +22,33 @@ int main()
 
 
 
-    int (*i)(int,int) = &add;
-    int (*j)(int,int) = &sub;
+    int (*i)(int,int) = NULL;
+//    int (*j)(int,int) = &sub;
+//    int ans = i(5,6);
+
+    void (*ans)(int,int) = *i;
+
+    i = &add;
 
     cout << "i = &add" << endl;
     cout << "&i = " << &i << endl
          << "i = " << i << endl
             << "*(*i) = " << *(*i) << endl;
+
+
+    cout << "(int*)ans(5,6) = i == " << (int*)ans(5,6) << endl;
 //    << (*i)(5,56) << endl << endl;
 
 
-    cout << "j = &sub" << endl;
-    cout << "&j = " << &j << endl
-         << "j = " << j << endl
-            << "*j = " << *j << endl << endl;
+//    cout << "j = &sub" << endl;
+//    cout << "&j = " << &j << endl
+//         << "j = " << j << endl
+//            << "*j = " << *j << endl << endl;
+
+//    ans = j;
+
+//    cout << "(int*)ans(5,6) = j == " << (int*)ans(5,6) << endl;
+
 //    << (*j)(5,56) << endl << endl;
 
 

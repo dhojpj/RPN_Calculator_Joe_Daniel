@@ -170,8 +170,8 @@ void Queue<T>::enqueue(const T& data)
 
     if(this->empty())
     {
-        tail = new Node<T>(data);
-        head = tail;
+        head = new Node<T>(data);
+        tail = head;
 
     }
     else

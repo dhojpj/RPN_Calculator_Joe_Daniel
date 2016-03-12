@@ -6,6 +6,10 @@
 #include "Queue.h" // need to rewrite this to be void pointers
 #include "Stack.h"
 
+
+// use an array of functions = assign by funct[0] = &add(a,b), funct[1] = &sub(a,b), etc.
+
+
 using std::cin;
 using std::cout;
 using std::endl;
