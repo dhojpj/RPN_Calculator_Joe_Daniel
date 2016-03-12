@@ -206,6 +206,8 @@ private:
     int num, denom;
     void copy(const fraction& other);
     int gcd(int p, int q);
+    void stringMethod(double x);
+    void whileLoopMethod(double x);
 
 
 };
