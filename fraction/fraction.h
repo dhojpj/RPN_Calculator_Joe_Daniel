@@ -5,17 +5,35 @@
 #include <cmath>
 #include <fstream>
 #include <sstream>
+#include <string>
+
 
 enum FRACTION_ERRORS{ZERO_DENOM};
 
 
-//using namespace std;
+//C
 using std::cout;
 using std::cin;
 using std::ostream;
 using std::istream;
 using std::endl;
 
+#include <string>
+#include <sstream>
+
+
+///got this from the internet
+/// http://stackoverflow.com/questions/12975341/to-string-is-not-a-member-of-std-says-so-g
+namespace patch
+{
+    template < typename T > std::string to_string( const T& n )
+    {
+        std::ostringstream stm ;
+        stm << n ;
+        return stm.str() ;
+    }
+//std::cout << patch::to_string(1234) << '\n' << patch::to_string(1234.56) << '\n' ;
+}
 
 class fraction
 {
@@ -53,6 +71,9 @@ public:
     // need to remove the first const
     friend
     fraction operator+(const fraction &x, const fraction &y);
+
+//    fraction& operator+(const fraction &y);
+
     friend
     fraction operator-(const fraction &x, const fraction &y);
     friend
@@ -73,8 +94,10 @@ public:
     friend
     fraction operator^(const fraction &x, int y);
     friend
+
     fraction operator+(int x, const fraction &y);
     friend
+
     fraction operator-(int x, const fraction &y);
     friend
     fraction operator*(int x, const fraction &y);

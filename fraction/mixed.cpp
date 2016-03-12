@@ -2,7 +2,10 @@
 
 mixed::mixed(int w, int n, int d)
 {
-    setValue((n+w*d),d);
+    ///not sure what to do when all three number are negative
+    //setValue((n+w*d),d);
+    value(w,n,d);
+    reduce();
 }
 
 mixed::mixed(const fraction& x)
@@ -31,6 +34,7 @@ mixed::mixed(int x, const fraction &f)
 {
     //int*denom+num/ denom
     this->setValue((x*f.get_denom()+f.get_num()),f.get_denom());
+    reduce();
 }
 
 mixed& mixed::operator=(const mixed &other)
@@ -64,7 +68,8 @@ mixed::~mixed()
 
 void mixed::value(int w, int n, int d)
 {
-    this->setValue(w*d+n,d);
+    int sign = (w<0 || n < 0) ? -1:1;
+    this->setValue(sign*(abs(w*d)+abs(n)),d);
 }
 
 
@@ -82,13 +87,20 @@ void mixed::value(const fraction &x)
 
 ostream& operator<<(ostream& out, const mixed &number)
 {
-    out<<number.get_num()<<"/"<<number.get_denom();
+    if(number.get_num() == 0 || number.get_denom() == 1)
+        out<<number.get_num()<<endl;
+    else
+        out<<number.get_num()<<"/"<<number.get_denom();
     return out;
 }
 
 istream& operator>>(istream& in, mixed &number)
 {
-
-
+    int a =0, b = 1;
+    cout<<"Enter num: ";
+    in>>a;
+    cout<<"Enter denom: ";
+    in>>b;
+    number.setValue(a,b);
     return in;
 }
